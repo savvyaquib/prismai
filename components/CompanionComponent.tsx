@@ -39,6 +39,7 @@ const CompanionComponent = ({
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
 
   const [isSpeaking, setIspeaking] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
 
   const lottieRef = useRef<LottieRefCurrentProps>(null);
 
@@ -77,6 +78,21 @@ const CompanionComponent = ({
       vapi.off("speech-end", onSpeechEnd);
     };
   }, []);
+
+  const toggleMicrophone = () => {
+    const isMuted = vapi.isMuted();
+    vapi.setMuted(!isMuted);
+    setIsMuted(!isMuted);
+  };
+
+  const handleCall = () => {
+    setCallStatus(CallStatus.CONNECTING);
+    
+  };
+
+  const handleDisconnect = () => {
+    vapi.stop();
+  };
 
   return (
     <section className="flex flex-col h-[70vh]">
@@ -134,8 +150,38 @@ const CompanionComponent = ({
             ) : (
               <div className="w-[130px] h-[130px] rounded-lg bg-gray-200" />
             )}
+            <p className="font-bold text-2xl">{userName}</p>
           </div>
+          <button className="btn-mic" onClick={toggleMicrophone}>
+            <Image
+              src={isMuted ? "/icons/mic-off.svg" : "/icons/mic-on.svg"}
+              alt="mic"
+              width={36}
+              height={36}
+            />
+            <p className="max-sm:hidden">{isMuted ? "Unmute" : "Mute"}</p>
+          </button>
+          <button
+            className={cn(
+              "rounded-lg py-2 cursor-pointer transition-colors w-full text-white",
+              callStatus === CallStatus.ACTIVE ? "bg-red-700" : "bg-primary",
+              callStatus === CallStatus.CONNECTING && "animate-pulse",
+            )}
+            onClick={
+              callStatus === CallStatus.ACTIVE ? handleDisconnect : handleCall
+            }
+          >
+            {callStatus === CallStatus.ACTIVE
+              ? "End Session"
+              : callStatus === CallStatus.CONNECTING
+                ? "Connecting..."
+                : "Start Session"}
+          </button>
         </div>
+      </section>
+      <section className="transcript">
+        <div className="transcript-message no-scrollbar">MESSAGES</div>
+        <div className="transcript-fade"></div>
       </section>
     </section>
   );
