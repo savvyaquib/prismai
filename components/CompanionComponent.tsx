@@ -86,9 +86,13 @@ const CompanionComponent = ({
   }, []);
 
   const toggleMicrophone = () => {
-    const isMuted = vapi.isMuted();
-    vapi.setMuted(!isMuted);
-    setIsMuted(!isMuted);
+    if (callStatus === CallStatus.ACTIVE) {
+      const vapiMuted = vapi.isMuted();
+      vapi.setMuted(!vapiMuted);
+      setIsMuted(!vapiMuted);
+    } else {
+      setIsMuted(!isMuted);
+    }
   };
 
   const handleCall = () => {
@@ -200,17 +204,17 @@ const CompanionComponent = ({
       </section>
       <section className="transcript">
         <div className="transcript-message no-scrollbar">
-          {messages.map((message) => {
+          {messages.map((message, index) => {
             if (message.role === "assistant") {
               return (
-                <p key={message.content} className="max-sm:text-sm">
+                <p key={`${message.content}-${index}`} className="max-sm:text-sm">
                   {name.split(" ")[0].replace("/[.,]/g", "")}: {message.content}
                 </p>
               );
             } else {
               return (
                 <p
-                  key={message.content}
+                  key={`${message.content}-${index}`}
                   className="text-primary max-sm:text-sm"
                 >
                   {userName}: {message.content}{" "}
