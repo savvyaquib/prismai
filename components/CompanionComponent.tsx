@@ -40,6 +40,7 @@ const CompanionComponent = ({
 
   const [isSpeaking, setIspeaking] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [messages, setMessages] = useState<SavedMessage[]>([]);
 
   const lottieRef = useRef<LottieRefCurrentProps>(null);
 
@@ -55,7 +56,12 @@ const CompanionComponent = ({
 
     const onCallStop = () => setCallStatus(CallStatus.ACTIVE);
 
-    const onMessage = () => {};
+    const onMessage = (message: Message) => {
+      if (message.type === "transcript" && message.transcriptType === "final") {
+        const newMessages = { role: message.role, content: message.transcript };
+        setMessages((prev) => [newMessages, ...prev]);
+      }
+    };
 
     const onSpeechStart = () => setIspeaking(true);
     const onSpeechEnd = () => setIspeaking(false);
@@ -193,7 +199,26 @@ const CompanionComponent = ({
         </div>
       </section>
       <section className="transcript">
-        <div className="transcript-message no-scrollbar">MESSAGES</div>
+        <div className="transcript-message no-scrollbar">
+          {messages.map((message) => {
+            if (message.role === "assistant") {
+              return (
+                <p key={message.content} className="max-sm:text-sm">
+                  {name.split(" ")[0].replace("/[.,]/g", "")}: {message.content}
+                </p>
+              );
+            } else {
+              return (
+                <p
+                  key={message.content}
+                  className="text-primary max-sm:text-sm"
+                >
+                  {userName}: {message.content}{" "}
+                </p>
+              );
+            }
+          })}
+        </div>
         <div className="transcript-fade"></div>
       </section>
     </section>
