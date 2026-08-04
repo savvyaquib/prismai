@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import soundwaves from "@/constants/soundwaves.json";
+import { addToSessionHistory } from "@/lib/actions/companion.actions";
 
 enum CallStatus {
   INACTIVE = "INACTIVE",
@@ -52,9 +53,14 @@ const CompanionComponent = ({
   }, [isSpeaking, lottieRef]);
 
   useEffect(() => {
-    const onCallEnd = () => setCallStatus(CallStatus.FINISHED);
+    const onCallEnd = () => {
+      setCallStatus(CallStatus.FINISHED);
+      addToSessionHistory(companionId);
+    };
 
-    const onCallStop = () => setCallStatus(CallStatus.ACTIVE);
+    const onCallStop = () => {
+      setCallStatus(CallStatus.ACTIVE);
+    };
 
     const onMessage = (message: Message) => {
       if (message.type === "transcript" && message.transcriptType === "final") {
@@ -175,7 +181,11 @@ const CompanionComponent = ({
             )}
             <p className="font-bold text-2xl">{userName}</p>
           </div>
-          <button className="btn-mic" onClick={toggleMicrophone} disabled={callStatus !== CallStatus.ACTIVE} >
+          <button
+            className="btn-mic"
+            onClick={toggleMicrophone}
+            disabled={callStatus !== CallStatus.ACTIVE}
+          >
             <Image
               src={isMuted ? "/icons/mic-off.svg" : "/icons/mic-on.svg"}
               alt="mic"
@@ -207,7 +217,10 @@ const CompanionComponent = ({
           {messages.map((message, index) => {
             if (message.role === "assistant") {
               return (
-                <p key={`${message.content}-${index}`} className="max-sm:text-sm">
+                <p
+                  key={`${message.content}-${index}`}
+                  className="max-sm:text-sm"
+                >
                   {name.split(" ")[0].replace("/[.,]/g", "")}: {message.content}
                 </p>
               );
