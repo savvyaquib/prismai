@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Companion SaaS
 
-## Getting Started
+A modern SaaS platform that allows users to interact with AI companions for various subjects and topics. Built with Next.js 16, React 19, Clerk, Supabase, and Vapi AI.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Interactive AI Companions**: Voice/Text conversational AI powered by [Vapi AI](https://vapi.ai/).
+- **Companion Library**: Browse, search, and filter lessons/companions by subject and topic.
+- **Authentication**: Secure user authentication and session management handled by [Clerk](https://clerk.com/).
+- **Database & Storage**: Robust backend using [Supabase](https://supabase.com/).
+- **User Journeys & Subscriptions**: Track user sessions and manage access to premium content.
+- **Modern UI**: Styled with [Tailwind CSS v4](https://tailwindcss.com/) and [Shadcn UI](https://ui.shadcn.com/).
+- **Error Tracking**: Monitored with [Sentry](https://sentry.io/).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 💻 Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
+- **Library**: [React 19](https://react.dev/)
+- **Auth**: [Clerk](https://clerk.com/)
+- **Database**: [Supabase](https://supabase.com/)
+- **AI Voice/Speech**: [Vapi AI](https://vapi.ai/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Components**: [Shadcn UI](https://ui.shadcn.com/) (Radix UI + Lucide Icons)
+- **Forms**: [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/)
+- **Monitoring**: [Sentry](https://sentry.io/)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Getting Started
 
-## Learn More
+### Prerequisites
 
-To learn more about Next.js, take a look at the following resources:
+Ensure you have Node.js installed on your machine. We recommend using `npm`, `yarn`, or `pnpm` as your package manager.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Clone the repository and navigate to the project directory:
+   ```bash
+   git clone <repository-url>
+   cd saas
+   ```
 
-## Deploy on Vercel
+2. Install the dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   # or
+   pnpm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Set up environment variables. Create a `.env.local` file in the root directory and add the following keys (fill in with your actual keys):
+   ```env
+   # Clerk
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+   CLERK_SECRET_KEY=
+   NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+   NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+   NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
+   NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   # Supabase
+   NEXT_PUBLIC_SUPABASE_URL=
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=
+
+   # Vapi AI
+   NEXT_PUBLIC_VAPI_PUBLIC_KEY=
+
+   # Sentry (Optional for local dev)
+   SENTRY_AUTH_TOKEN=
+   ```
+
+4. Start the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   # or
+   pnpm dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the application running.
+
+## 📂 Project Structure
+
+- `/app`: Next.js App Router containing pages, layouts, and API routes.
+  - `/(protected)`: Protected routes requiring authentication (Companions, Subscriptions, Journey).
+  - `/api`: Backend API endpoints.
+  - `/sign-in`, `/sign-up`: Clerk authentication pages.
+- `/components`: Reusable React components (UI elements, Forms, Cards, Navbar).
+- `/lib`: Utility functions and Server Actions.
+- `/constants`: Application-wide constant data and configurations.
+- `/types`: TypeScript type definitions.
+- `/public`: Static assets like icons and images.
+
+## 📜 Scripts
+
+- `npm run dev`: Starts the local development server.
+- `npm run build`: Builds the application for production.
+- `npm run start`: Starts the production server.
+- `npm run lint`: Runs ESLint to check for code issues.
