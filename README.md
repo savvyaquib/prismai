@@ -1,6 +1,6 @@
-# AI Companion SaaS
+# Prismai - AI Companion SaaS
 
-A modern SaaS platform that allows users to interact with AI companions for various subjects and topics. Built with Next.js 16, React 19, Clerk, Supabase, and Vapi AI.
+Prismai is a state-of-the-art SaaS platform engineered to revolutionize teaching and learning through interactive AI companions. Leveraging advanced real-time voice and text conversational AI, Prismai delivers highly personalized educational experiences across diverse subjects. The platform is robustly built for scale and performance, utilizing a modern tech stack including Next.js 16, React 19, Clerk, Supabase, and Vapi AI.
 
 ## 🚀 Features
 
