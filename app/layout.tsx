@@ -15,7 +15,7 @@ const bricolage = Bricolage_Grotesque({
 
 export const metadata: Metadata = {
   title: "Prismai",
-  description: "Advanced Real-time AI Teaching and Learning Platform",
+  description: "Enterprise-grade real-time AI teaching and learning platform delivering highly personalized educational experiences through interactive companions.",
 };
 
 export default function RootLayout({
