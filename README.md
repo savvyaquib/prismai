@@ -2,7 +2,7 @@
 
 Prismai is a state-of-the-art SaaS platform engineered to revolutionize teaching and learning through interactive AI companions. Leveraging advanced real-time voice and text conversational AI, Prismai delivers highly personalized educational experiences across diverse subjects. The platform is robustly built for scale and performance, utilizing a modern tech stack including Next.js 16, React 19, Clerk, Supabase, and Vapi AI.
 
-## 🚀 Features
+## Features
 
 - **Interactive AI Companions**: Voice/Text conversational AI powered by [Vapi AI](https://vapi.ai/).
 - **Companion Library**: Browse, search, and filter lessons/companions by subject and topic.
@@ -12,7 +12,7 @@ Prismai is a state-of-the-art SaaS platform engineered to revolutionize teaching
 - **Modern UI**: Styled with [Tailwind CSS v4](https://tailwindcss.com/) and [Shadcn UI](https://ui.shadcn.com/).
 - **Error Tracking**: Monitored with [Sentry](https://sentry.io/).
 
-## 💻 Tech Stack
+## Tech Stack
 
 - **Framework**: [Next.js](https://nextjs.org/) (App Router)
 - **Library**: [React 19](https://react.dev/)
@@ -24,7 +24,7 @@ Prismai is a state-of-the-art SaaS platform engineered to revolutionize teaching
 - **Forms**: [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/)
 - **Monitoring**: [Sentry](https://sentry.io/)
 
-## 🛠️ Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -79,7 +79,7 @@ Ensure you have Node.js installed on your machine. We recommend using `npm`, `ya
 
 5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the application running.
 
-## 📂 Project Structure
+## Project Structure
 
 - `/app`: Next.js App Router containing pages, layouts, and API routes.
   - `/(protected)`: Protected routes requiring authentication (Companions, Subscriptions, Journey).
@@ -91,7 +91,7 @@ Ensure you have Node.js installed on your machine. We recommend using `npm`, `ya
 - `/types`: TypeScript type definitions.
 - `/public`: Static assets like icons and images.
 
-## 📜 Scripts
+## Scripts
 
 - `npm run dev`: Starts the local development server.
 - `npm run build`: Builds the application for production.
