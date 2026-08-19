@@ -33,12 +33,13 @@ Ensure you have Node.js installed on your machine. We recommend using `npm`, `ya
 ### Installation
 
 1. Clone the repository and navigate to the project directory:
+
    ```bash
-   git clone <repository-url>
-   cd saas
+   git clone https://github.com/savvyaquib/prismai.git
    ```
 
 2. Install the dependencies:
+
    ```bash
    npm install
    # or
@@ -48,6 +49,7 @@ Ensure you have Node.js installed on your machine. We recommend using `npm`, `ya
    ```
 
 3. Set up environment variables. Create a `.env.local` file in the root directory and add the following keys (fill in with your actual keys):
+
    ```env
    # Clerk
    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
@@ -69,6 +71,7 @@ Ensure you have Node.js installed on your machine. We recommend using `npm`, `ya
    ```
 
 4. Start the development server:
+
    ```bash
    npm run dev
    # or
