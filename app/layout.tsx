@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn("font-sans", geist.variable)}>
-      <body className={`${bricolage.variable} antialiased`}>
+      <body className={`${bricolage.variable} antialiased`} suppressHydrationWarning>
         <ClerkProvider appearance={{ variables: { colorPrimary: "#fe5933" } }}>
           <Navbar />
           {children}
