@@ -27,8 +27,8 @@ const CompanionCard = ({
           <Image
             src="/icons/bookmark.svg"
             alt="Bookmark"
-            width={12.5}
-            height={15}
+            width={20}
+            height={24}
           />
         </Button>
       </div>
