@@ -44,6 +44,7 @@ const CompanionComponent = ({
   const [messages, setMessages] = useState<SavedMessage[]>([]);
 
   const lottieRef = useRef<LottieRefCurrentProps>(null);
+  const hasSessionBeenSaved = useRef(false);
 
   useEffect(() => {
     if (lottieRef) {
@@ -55,10 +56,17 @@ const CompanionComponent = ({
   useEffect(() => {
     const onCallEnd = () => {
       setCallStatus(CallStatus.FINISHED);
-      addToSessionHistory(companionId);
+
+      if (!hasSessionBeenSaved.current) {
+        hasSessionBeenSaved.current = true;
+        addToSessionHistory(companionId).catch((error) => {
+          console.error("Failed to save session history:", error);
+        });
+      }
     };
 
     const onCallStop = () => {
+      hasSessionBeenSaved.current = false;
       setCallStatus(CallStatus.ACTIVE);
     };
 
