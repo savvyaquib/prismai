@@ -76,17 +76,52 @@ export const addToSessionHistory = async (companionId: string) => {
   return data;
 };
 
+/**
+ * `session_history` is an append-only event log: one row per completed lesson.
+ * The "recent sessions" lists are a *companion* feed, not an event feed, so a
+ * companion must appear once — at the position of its most recent session.
+ *
+ * Postgres would express this as `DISTINCT ON (companion_id)`, which PostgREST
+ * cannot emit, so we over-fetch a bounded window of the newest events and
+ * collapse them in order. The multiplier keeps the list full when a user has
+ * replayed a handful of companions many times.
+ */
+const SESSION_FETCH_MULTIPLIER = 10;
+const MAX_SESSION_FETCH = 200;
+
+type SessionHistoryRow = { companions: Companion | null };
+
+const sessionFetchWindow = (limit: number) =>
+  Math.min(limit * SESSION_FETCH_MULTIPLIER, MAX_SESSION_FETCH);
+
+const toRecentCompanions = (rows: SessionHistoryRow[], limit: number) => {
+  const seen = new Set<string>();
+  const companions: Companion[] = [];
+
+  for (const { companions: companion } of rows) {
+    // Null once the companion is deleted after its session was recorded.
+    if (!companion || seen.has(companion.id)) continue;
+
+    seen.add(companion.id);
+    companions.push(companion);
+
+    if (companions.length === limit) break;
+  }
+
+  return companions;
+};
+
 export const getRecentSessions = async (limit = 10) => {
   const supabase = createSupabaseClient();
   const { data, error } = await supabase
     .from("session_history")
     .select(`companions:companion_id (*)`)
     .order("created_at", { ascending: false })
-    .limit(limit);
+    .limit(sessionFetchWindow(limit));
 
   if (error) throw new Error(error.message);
 
-  return data.map(({ companions }) => companions);
+  return toRecentCompanions(data as unknown as SessionHistoryRow[], limit);
 };
 
 export const getUserSessions = async (userId: string, limit = 10) => {
@@ -96,11 +131,27 @@ export const getUserSessions = async (userId: string, limit = 10) => {
     .select(`companions:companion_id (*)`)
     .eq("user_id", userId)
     .order("created_at", { ascending: false })
-    .limit(limit);
+    .limit(sessionFetchWindow(limit));
 
   if (error) throw new Error(error.message);
 
-  return data.map(({ companions }) => companions);
+  return toRecentCompanions(data as unknown as SessionHistoryRow[], limit);
+};
+
+/**
+ * Total lessons completed — counted from the raw event log, since the recent
+ * session lists are deduplicated per companion and can no longer stand in.
+ */
+export const getUserSessionCount = async (userId: string) => {
+  const supabase = createSupabaseClient();
+  const { count, error } = await supabase
+    .from("session_history")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", userId);
+
+  if (error) throw new Error(error.message);
+
+  return count ?? 0;
 };
 
 export const getUserCompanions = async (userId: string) => {

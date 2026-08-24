@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/accordion";
 import {
   getUserCompanions,
+  getUserSessionCount,
   getUserSessions,
 } from "@/lib/actions/companion.actions";
 import { currentUser } from "@clerk/nextjs/server";
@@ -14,11 +15,11 @@ import Image from "next/image";
 
 export const Profile = async () => {
   const user = await currentUser();
-  const sessions = await getUserSessions(user?.id!);
-  const companions = await getUserCompanions(user?.id!);
-
-  console.log("sessions", sessions);
-  console.log("companions", companions);
+  const [sessions, sessionCount, companions] = await Promise.all([
+    getUserSessions(user?.id!),
+    getUserSessionCount(user?.id!),
+    getUserCompanions(user?.id!),
+  ]);
 
   return (
     <main className="min-lg:w-3/4">
@@ -43,7 +44,7 @@ export const Profile = async () => {
           <div className="border border-black rounded-lg p-3 gap-2 flex flex-col h-fit">
             <div className="flex gap-2 items-center">
               <Image src={"/icons/check.svg"} alt="checkmark" width={22} height={22} />
-              <p className="font-bold text-2xl">{sessions?.length}</p>
+              <p className="font-bold text-2xl">{sessionCount}</p>
             </div>
             <div>Lessons completed</div>
           </div>
