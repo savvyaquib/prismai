@@ -96,7 +96,7 @@ export const Profile = async () => {
                * /public/icons/.  If you have a filled variant use that here.
                */}
               <Image
-                src={"/icons/bookmark.svg"}
+                src={"/icons/bookmark-orange.svg"}
                 alt="bookmark"
                 width={22}
                 height={22}
