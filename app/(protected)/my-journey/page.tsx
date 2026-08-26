@@ -138,13 +138,15 @@ export const Profile = async () => {
          * an empty state message guides the user when nothing is saved yet.
          */}
         <AccordionItem value="saved">
-          <AccordionTrigger className="text-2xl font-bold">
-            Saved Companions
-            {savedCompanions.length > 0 && (
-              <span className="ml-2 text-sm font-normal text-muted-foreground">
-                ({savedCompanions.length})
-              </span>
-            )}
+          <AccordionTrigger className="text-2xl font-bold hover:no-underline">
+            <div className="flex flex-1 items-center justify-between pr-4">
+              <span>Saved Companions</span>
+              {savedCompanions.length > 0 && (
+                <span className="text-sm font-normal text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
+                  {savedCompanions.length}
+                </span>
+              )}
+            </div>
           </AccordionTrigger>
           <AccordionContent>
             {savedCompanions.length > 0 ? (
