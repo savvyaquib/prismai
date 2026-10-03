@@ -6,12 +6,16 @@ import { recentSessions } from "@/constants";
 import {
   getAllCompanions,
   getRecentSessions,
+  getSavedCompanionIds,
 } from "@/lib/actions/companion.actions";
 import { getSubjectColor } from "@/lib/utils";
 
 const Page = async () => {
-  const companions = await getAllCompanions({ limit: 3 });
-  const recentSessionsCompanions = await getRecentSessions(10);
+  const [companions, recentSessionsCompanions, savedIds] = await Promise.all([
+    getAllCompanions({ limit: 3 }),
+    getRecentSessions(10),
+    getSavedCompanionIds(),
+  ]);
   return (
     <main>
       <h1>Popular Companions</h1>
@@ -21,6 +25,7 @@ const Page = async () => {
             key={companion.id}
             {...companion}
             color={getSubjectColor(companion.subject)}
+            isSaved={savedIds.has(companion.id)}
           />
         ))}
       </section>
