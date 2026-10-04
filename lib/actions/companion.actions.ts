@@ -244,6 +244,7 @@ export const toggleSaveCompanion = async (
     if (deleteError) throw new Error(deleteError.message);
 
     // Revalidate affected pages so the RSC payload is fresh.
+    revalidatePath("/");
     revalidatePath("/companions");
     revalidatePath("/my-journey");
 
@@ -258,6 +259,7 @@ export const toggleSaveCompanion = async (
   if (insertError) throw new Error(insertError.message);
 
   // Revalidate affected pages so the RSC payload is fresh.
+  revalidatePath("/");
   revalidatePath("/companions");
   revalidatePath("/my-journey");
 
